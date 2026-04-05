@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Qalandar Sattarberdiev — Portfolio</title>
+  <meta name="description" content="Qalandar Sattarberdiev — 16 yoshli dasturchi. IT Park da tahsil oluvchi." />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+<!-- Background Blobs -->
+<div class="bg-blob bg-blob-1"></div>
+<div class="bg-blob bg-blob-2"></div>
+<div class="bg-blob bg-blob-3"></div>
+
+<!-- ===== HEADER ===== -->
+<header id="main-header">
+  <div class="header-inner">
+    <!-- Greeting (desktop) -->
+    <div class="header-greeting">
+      <span>Assalomu aleykum,</span> xush kelibsiz 👋
+    </div>
+    <!-- Brand (mobile only) -->
+    <div class="header-brand">QS</div>
+    <!-- Desktop nav -->
+    <nav>
+      <a href="#" class="nav-link active" data-page="home">Bosh sahifa</a>
+      <a href="#" class="nav-link" data-page="projects">Proektlarimni ko'rish</a>
+      <a href="#" class="nav-link" data-page="contact">Bog'lanish</a>
+    </nav>
+    <!-- Hamburger -->
+    <button class="hamburger" id="hamburger" aria-label="Menyuni ochish/yopish" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- Mobile Navigation -->
+<div class="mobile-nav" id="mobile-nav">
+  <a href="#" class="nav-link active" data-page="home">🏠 Bosh sahifa</a>
+  <a href="#" class="nav-link" data-page="projects">💼 Proektlarimni ko'rish</a>
+  <a href="#" class="nav-link" data-page="contact">📬 Bog'lanish</a>
+</div>
+
+<!-- ===== MAIN ===== -->
+<main>
+
+  <!-- ==============================
+       HOME PAGE
+  ============================== -->
+  <div class="page active" id="page-home">
+    <section class="home-hero">
+      <div class="section-wrap">
+        <div class="hero-grid">
+
+          <!-- Left: Profile Image -->
+          <div class="hero-image-side">
+            <div class="profile-card">
+              <div class="profile-card-glow"></div>
+              <div class="profile-img-wrap">
+                <div class="profile-img-placeholder">
+                  <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="40" cy="30" r="20" fill="currentColor"/>
+                    <ellipse cx="40" cy="72" rx="32" ry="20" fill="currentColor"/>
+                  </svg>
+                  <span><img src="image/photo_2026-04-04_16-23-13.jpg" alt=""></span>
+                </div>
+              </div>
+              <div class="profile-badge">💻 Junior Dev</div>
+            </div>
+          </div>
+
+          <!-- Right: Info -->
+          <div class="hero-info-side">
+            <div class="hero-tag">
+              <span class="hero-tag-dot"></span>
+              IT Park talabasi
+            </div>
+            <h1 class="hero-name">Qalandar<br>Sattarberdiev</h1>
+            <p class="hero-subtitle">
+              <strong>16 yoshli</strong> dasturchi — kelajakdagi
+              professional developer
+            </p>
+
+            <!-- Info Grid -->
+            <div class="info-grid">
+              <div class="info-item">
+                <div class="info-label">Yosh</div>
+                <div class="info-value">16 yosh 🎂</div>
+              </div>
+              <div class="info-item">
+                <div class="info-label">Ta'lim</div>
+                <div class="info-value">O'rta ta'lim</div>
+              </div>
+              <div class="info-item span-2">
+                <div class="info-label">O'qish joyi</div>
+                <div class="info-value">🏛️ IT Park</div>
+              </div>
+            </div>
+
+            <!-- Interests -->
+            <div class="interests-section">
+              <div class="interests-title">Qiziqishlarim</div>
+              <div class="interests-tags">
+                <span class="interest-tag">⌨️ Dasturlash</span>
+                <span class="interest-tag">⚽ Futbol o'ynash</span>
+                <span class="interest-tag">📺 Futbol ko'rish</span>
+                <span class="interest-tag">📚 Kitob o'qish</span>
+              </div>
+            </div>
+
+            <!-- CTA -->
+            <button class="btn-primary" data-page="contact">
+              <span>Men bilan bog'lanish</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+              </svg>
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ==============================
+       PROJECTS PAGE
+  ============================== -->
+  <div class="page" id="page-projects">
+    <section>
+      <div class="section-wrap">
+        <div class="projects-header fade-in-up">
+          <div class="section-eyebrow">Portfolio</div>
+          <h2 class="section-title">Mening Proektlarim</h2>
+          <p class="section-desc">
+            Dasturlash yo'lida yaratilgan ishlarim — har biri yangi ko'nikma va tajriba
+          </p>
+        </div>
+
+        <div class="projects-grid">
+
+          <!-- Card 1 -->
+          <div class="project-card" data-link="#" onclick="openProject(this)">
+            <div class="project-card-bg bg-p1">
+              <div class="project-card-inner-pattern">🌐</div>
+            </div>
+            <div class="project-card-overlay"></div>
+            <div class="project-card-overlay-hover"></div>
+            <div class="project-card-link-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+            </div>
+            <div class="project-card-content">
+              <div class="project-card-num">01</div>
+              <div class="project-card-title">Web Sayt</div>
+              <div class="project-card-tag">HTML · CSS</div>
+            </div>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="project-card" data-link="#" onclick="openProject(this)">
+            <div class="project-card-bg bg-p2">
+              <div class="project-card-inner-pattern">🧮</div>
+            </div>
+            <div class="project-card-overlay"></div>
+            <div class="project-card-overlay-hover"></div>
+            <div class="project-card-link-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+            </div>
+            <div class="project-card-content">
+              <div class="project-card-num">02</div>
+              <div class="project-card-title">Kalkulyator</div>
+              <div class="project-card-tag">JavaScript</div>
+            </div>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="project-card" data-link="#" onclick="openProject(this)">
+            <div class="project-card-bg bg-p3">
+              <div class="project-card-inner-pattern">📝</div>
+            </div>
+            <div class="project-card-overlay"></div>
+            <div class="project-card-overlay-hover"></div>
+            <div class="project-card-link-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+            </div>
+            <div class="project-card-content">
+              <div class="project-card-num">03</div>
+              <div class="project-card-title">Todo App</div>
+              <div class="project-card-tag">JavaScript</div>
+            </div>
+          </div>
+
+          <!-- Card 4 -->
+          <div class="project-card" data-link="#" onclick="openProject(this)">
+            <div class="project-card-bg bg-p4">
+              <div class="project-card-inner-pattern">🎨</div>
+            </div>
+            <div class="project-card-overlay"></div>
+            <div class="project-card-overlay-hover"></div>
+            <div class="project-card-link-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+            </div>
+            <div class="project-card-content">
+              <div class="project-card-num">04</div>
+              <div class="project-card-title">Landing Page</div>
+              <div class="project-card-tag">HTML · CSS</div>
+            </div>
+          </div>
+
+          <!-- Card 5 -->
+          <div class="project-card" data-link="#" onclick="openProject(this)">
+            <div class="project-card-bg bg-p5">
+              <div class="project-card-inner-pattern">⚡</div>
+            </div>
+            <div class="project-card-overlay"></div>
+            <div class="project-card-overlay-hover"></div>
+            <div class="project-card-link-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+            </div>
+            <div class="project-card-content">
+              <div class="project-card-num">05</div>
+              <div class="project-card-title">Quiz App</div>
+              <div class="project-card-tag">JS · DOM</div>
+            </div>
+          </div>
+
+          <!-- Card 6 -->
+          <div class="project-card" data-link="#" onclick="openProject(this)">
+            <div class="project-card-bg bg-p6">
+              <div class="project-card-inner-pattern">🌤️</div>
+            </div>
+            <div class="project-card-overlay"></div>
+            <div class="project-card-overlay-hover"></div>
+            <div class="project-card-link-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+            </div>
+            <div class="project-card-content">
+              <div class="project-card-num">06</div>
+              <div class="project-card-title">Weather App</div>
+              <div class="project-card-tag">API · JS</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ==============================
+       CONTACT PAGE
+  ============================== -->
+  <div class="page" id="page-contact">
+    <section class="contact-hero">
+      <div class="section-wrap">
+        <div class="contact-wrap">
+          <div class="contact-card fade-in-up">
+
+            <div class="contact-card-top">
+              <div class="contact-card-top-glow"></div>
+              <div class="contact-avatar">QS</div>
+              <div class="section-eyebrow" style="margin-bottom: 0.5rem;">Aloqa</div>
+              <h2 class="section-title" style="font-size: 2rem; margin-bottom: 0.5rem;">Bog'lanish</h2>
+              <p style="color: var(--text2); font-size: 0.95rem;">
+                Loyiha yoki hamkorlik uchun murojaat qiling
+              </p>
+            </div>
+
+            <div class="contact-card-bottom">
+
+              <!-- Phone -->
+              <a href="tel:+998886512939" class="contact-item">
+                <div class="contact-icon-wrap contact-icon-phone">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.38 2 2 0 0 1 3.58 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                  </svg>
+                </div>
+                <div>
+                  <div class="contact-item-label">Telefon raqam</div>
+                  <div class="contact-item-value">+998 88 651 29 39</div>
+                </div>
+                <div class="contact-item-arrow">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </div>
+              </a>
+
+              <!-- Email -->
+              <a href="mailto:qalandarsattarov9@gmail.com" class="contact-item">
+                <div class="contact-icon-wrap contact-icon-email">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                    <polyline points="22,6 12,13 2,6"/>
+                  </svg>
+                </div>
+                <div>
+                  <div class="contact-item-label">Email manzil</div>
+                  <div class="contact-item-value">qalandarsattarov9@gmail.com</div>
+                </div>
+                <div class="contact-item-arrow">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </div>
+              </a>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+</main>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-copy">
+      © 2024 <span>Qalandar Sattarberdiev</span> — Portfolio
+    </div>
+    <div class="footer-socials">
+      <!-- Instagram -->
+      <a href="https://instagram.com/sattarovv_lvl" target="_blank" class="social-btn" title="Instagram">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+          <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+          <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+        </svg>
+      </a>
+      <!-- Telegram -->
+      <a href="https://t.me/sattarov_lv" target="_blank" class="social-btn" title="Telegram">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="22" y1="2" x2="11" y2="13"/>
+          <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+        </svg>
+      </a>
+      <!-- Phone -->
+      <a href="tel:+998886512939" class="social-btn social-phone-btn" title="Call">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.38 2 2 0 0 1 3.58 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+        </svg>
+        <span>+998 88 651 29 39</span>
+      </a>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
