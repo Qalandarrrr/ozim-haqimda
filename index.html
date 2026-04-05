@@ -1,310 +1,450 @@
 <!DOCTYPE html>
 <html lang="uz">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Qalandar Sattarberdiev — Portfolio</title>
-  <meta name="description" content="Qalandar Sattarberdiev — 16 yoshli dasturchi. IT Park da tahsil oluvchi." />
-  <link rel="stylesheet" href="style.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Qalandar Sattarberdiev — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+/* ===== VARIABLES ===== */
+:root {
+  --bg:#080b14; --bg2:#0d1120; --surface:#151d2e; --surface2:#1c2640;
+  --accent:#6c63ff; --accent2:#a78bfa; --accent3:#38bdf8;
+  --text:#f1f5f9; --text2:#94a3b8; --text3:#64748b;
+  --border:rgba(108,99,255,0.18); --border2:rgba(255,255,255,0.06);
+  --radius:16px; --radius2:24px;
+  --font-d:'Syne',sans-serif; --font-b:'Outfit',sans-serif;
+  --ease:0.3s cubic-bezier(0.4,0,0.2,1);
+  --hh:64px; /* header height */
+}
+
+/* ===== RESET ===== */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:var(--font-b);background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;line-height:1.6}
+a{text-decoration:none;color:inherit}
+img{max-width:100%;height:auto;display:block}
+button{cursor:pointer;font-family:inherit;border:none;background:none}
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--accent);border-radius:3px}
+
+/* ===== BG BLOBS ===== */
+.blob{position:fixed;border-radius:50%;filter:blur(90px);pointer-events:none;z-index:0;animation:blobf 8s ease-in-out infinite alternate}
+.blob1{width:min(500px,80vw);height:min(500px,80vw);background:radial-gradient(circle,rgba(108,99,255,.12),transparent 70%);top:-150px;left:-100px}
+.blob2{width:min(400px,70vw);height:min(400px,70vw);background:radial-gradient(circle,rgba(56,189,248,.08),transparent 70%);bottom:0;right:-100px;animation-delay:-3s}
+@keyframes blobf{to{transform:translateY(-28px) scale(1.04)}}
+
+/* ===== HEADER ===== */
+header{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  height:var(--hh);padding:0 clamp(1rem,4vw,2rem);
+  background:rgba(8,11,20,.82);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border2);
+  transition:background .3s,box-shadow .3s;
+}
+header.scrolled{background:rgba(8,11,20,.97);box-shadow:0 8px 32px rgba(0,0,0,.5)}
+.h-inner{max-width:1200px;margin:0 auto;height:100%;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+
+.h-greeting{font-family:var(--font-d);font-size:clamp(.7rem,1.4vw,.88rem);font-weight:700;color:var(--text2);white-space:nowrap;display:none}
+.h-greeting span{color:var(--accent2)}
+.h-brand{font-family:var(--font-d);font-size:1rem;font-weight:800;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;flex:1}
+
+/* Desktop nav */
+nav{display:none;align-items:center;gap:.2rem}
+.nl{font-family:var(--font-b);font-size:.88rem;font-weight:500;color:var(--text2);padding:.45rem .85rem;border-radius:8px;transition:color var(--ease);position:relative;white-space:nowrap}
+.nl::after{content:'';position:absolute;bottom:3px;left:50%;transform:translateX(-50%) scaleX(0);width:18px;height:2px;background:var(--accent);border-radius:2px;transition:transform var(--ease)}
+.nl:hover,.nl.active{color:var(--text)}
+.nl:hover::after,.nl.active::after{transform:translateX(-50%) scaleX(1)}
+
+/* ===== HAMBURGER ===== */
+.hbg{
+  display:flex;flex-direction:column;justify-content:center;
+  gap:5px;padding:8px;width:40px;height:40px;flex-shrink:0;
+  background:rgba(108,99,255,.1);border:1px solid var(--border);
+  border-radius:10px;transition:background var(--ease),border-color var(--ease);
+}
+.hbg:hover{background:rgba(108,99,255,.18);border-color:var(--border)}
+.hbg span{
+  display:block;width:20px;height:2px;
+  background:var(--text);border-radius:2px;
+  transition:transform .3s ease,opacity .3s ease;
+  transform-origin:center;
+}
+/* X animation */
+.hbg.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.hbg.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+.hbg.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+/* ===== MOBILE NAV ===== */
+.mnav{
+  display:flex;flex-direction:column;gap:.3rem;
+  position:fixed;top:var(--hh);left:0;right:0;
+  background:rgba(8,11,20,.98);
+  backdrop-filter:blur(28px);-webkit-backdrop-filter:blur(28px);
+  border-bottom:1px solid var(--border2);
+  padding:1rem 1.25rem 1.75rem;
+  z-index:998;
+  /* HIDDEN STATE */
+  visibility:hidden;
+  opacity:0;
+  transform:translateY(-14px);
+  pointer-events:none;
+  transition:opacity .28s cubic-bezier(.4,0,.2,1),
+             transform .28s cubic-bezier(.4,0,.2,1),
+             visibility 0s linear .28s;
+}
+/* OPEN STATE */
+.mnav.open{
+  visibility:visible;
+  opacity:1;
+  transform:translateY(0);
+  pointer-events:auto;
+  transition:opacity .28s cubic-bezier(.4,0,.2,1),
+             transform .28s cubic-bezier(.4,0,.2,1),
+             visibility 0s linear 0s;
+}
+.mnav-top{
+  font-family:var(--font-d);font-size:.72rem;font-weight:700;
+  color:var(--accent2);letter-spacing:.1em;text-transform:uppercase;
+  padding:.2rem .5rem .4rem;opacity:.7;
+}
+.mnav-line{height:1px;background:var(--border2);margin-bottom:.3rem}
+.mnav .nl{
+  display:flex;align-items:center;gap:.7rem;
+  font-size:1rem;font-weight:500;
+  padding:.9rem 1rem;border-radius:12px;
+  border:1px solid transparent;color:var(--text2);
+  transition:background var(--ease),border-color var(--ease),color var(--ease),transform .2s;
+}
+.mnav .nl::after{display:none}
+.mnav .nl:hover{color:var(--text);background:rgba(108,99,255,.08);border-color:var(--border);transform:translateX(4px)}
+.mnav .nl.active{color:var(--text);background:rgba(108,99,255,.12);border-color:rgba(108,99,255,.25)}
+
+/* Overlay backdrop */
+.moverlay{
+  position:fixed;inset:0;top:var(--hh);
+  background:rgba(0,0,0,.55);
+  backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);
+  z-index:997;
+  visibility:hidden;opacity:0;
+  transition:opacity .28s ease,visibility 0s linear .28s;
+}
+.moverlay.open{visibility:visible;opacity:1;transition:opacity .28s ease,visibility 0s linear 0s}
+
+/* ===== MAIN ===== */
+main{position:relative;z-index:1;padding-top:var(--hh)}
+.page{display:none}
+.page.active{display:block}
+.wrap{max-width:1200px;margin:0 auto;padding:clamp(2rem,5vw,5rem) clamp(1rem,5vw,2rem)}
+
+/* ===== HOME ===== */
+.home-sec{min-height:calc(100svh - var(--hh));display:flex;align-items:center}
+.hgrid{display:grid;grid-template-columns:1fr;gap:clamp(1.5rem,4vw,2.5rem);align-items:center;width:100%}
+.img-side{display:flex;justify-content:center;order:-1;animation:fadeL .75s ease both}
+.pcard{position:relative;width:100%;max-width:clamp(180px,50vw,280px)}
+.pglow{position:absolute;inset:-2px;border-radius:var(--radius2);background:linear-gradient(135deg,var(--accent),var(--accent3),var(--accent2));opacity:.55;filter:blur(12px);z-index:0;animation:gp 3s ease-in-out infinite}
+@keyframes gp{0%,100%{opacity:.38;filter:blur(12px)}50%{opacity:.68;filter:blur(22px)}}
+.pimgw{position:relative;z-index:1;border-radius:var(--radius2);overflow:hidden;border:2px solid var(--border);background:var(--surface);aspect-ratio:3/4}
+.pph{width:100%;height:100%;min-height:200px;background:linear-gradient(135deg,var(--surface),var(--surface2));display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.75rem;color:var(--text3)}
+.pph svg{opacity:.35;width:clamp(40px,10vw,70px);height:auto}
+.pbadge{position:absolute;bottom:-12px;right:-10px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-family:var(--font-d);font-size:clamp(.6rem,1.5vw,.75rem);font-weight:700;padding:.45rem .85rem;border-radius:50px;letter-spacing:.05em;box-shadow:0 8px 24px rgba(108,99,255,.4);z-index:2;white-space:nowrap}
+
+.info-side{text-align:center;animation:fadeR .75s ease both .18s}
+.tag{display:inline-flex;align-items:center;gap:.5rem;background:rgba(108,99,255,.1);border:1px solid var(--border);color:var(--accent2);font-size:.72rem;font-weight:700;padding:.3rem .85rem;border-radius:50px;margin-bottom:.85rem;letter-spacing:.08em;text-transform:uppercase}
+.tagdot{width:6px;height:6px;background:var(--accent);border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.45;transform:scale(.75)}}
+.hname{font-family:var(--font-d);font-size:clamp(1.8rem,6vw,3.4rem);font-weight:800;line-height:1.1;margin-bottom:.5rem;background:linear-gradient(135deg,#fff,var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hsub{font-size:clamp(.88rem,2vw,1.05rem);color:var(--text2);margin-bottom:1.5rem}
+.hsub strong{color:var(--accent3);font-weight:600}
+
+.igrid{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-bottom:1.25rem}
+.iitem{background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius);padding:.75rem .9rem;transition:border-color var(--ease),background var(--ease),transform var(--ease)}
+.iitem:hover{border-color:var(--border);background:var(--surface2);transform:translateY(-2px)}
+.iitem.s2{grid-column:span 2}
+.ilabel{font-size:.65rem;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.2rem}
+.ival{font-size:.88rem;font-weight:500;color:var(--text)}
+
+.int-sec{margin-bottom:1.5rem}
+.int-title{font-size:.68rem;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.55rem}
+.int-tags{display:flex;flex-wrap:wrap;gap:.4rem;justify-content:center}
+.itag{display:inline-flex;align-items:center;gap:.32rem;background:rgba(167,139,250,.08);border:1px solid rgba(167,139,250,.16);color:var(--accent2);font-size:.8rem;font-weight:500;padding:.35rem .8rem;border-radius:50px;transition:background var(--ease),border-color var(--ease),transform var(--ease)}
+.itag:hover{background:rgba(167,139,250,.16);border-color:rgba(167,139,250,.32);transform:translateY(-2px)}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.6rem;width:100%;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-family:var(--font-b);font-size:.95rem;font-weight:600;padding:.82rem 1.9rem;border-radius:50px;border:none;cursor:pointer;transition:transform var(--ease),box-shadow var(--ease);box-shadow:0 8px 24px rgba(108,99,255,.32);position:relative;overflow:hidden}
+.btn::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--accent2),var(--accent));opacity:0;transition:opacity var(--ease)}
+.btn:hover{transform:translateY(-3px);box-shadow:0 14px 36px rgba(108,99,255,.48)}
+.btn:hover::before{opacity:1}
+.btn span,.btn svg{position:relative;z-index:1}
+
+/* ===== PROJECTS ===== */
+.phead{text-align:center;margin-bottom:clamp(1.75rem,5vw,3.5rem)}
+.eyebrow{display:inline-block;font-size:.72rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin-bottom:.6rem}
+.stitle{font-family:var(--font-d);font-size:clamp(1.6rem,5vw,2.8rem);font-weight:800;line-height:1.2;background:linear-gradient(135deg,#fff,var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:.75rem}
+.sdesc{color:var(--text2);font-size:.93rem;max-width:460px;margin:0 auto}
+
+.pgrid{display:grid;grid-template-columns:1fr;gap:.9rem}
+.pc{width:100%;aspect-ratio:1;position:relative;border-radius:var(--radius);overflow:hidden;cursor:pointer;border:1px solid var(--border2);transition:transform .4s cubic-bezier(.4,0,.2,1),box-shadow .4s ease;min-height:140px}
+.pcbg{position:absolute;inset:0;background-size:cover;background-position:center;transition:transform .6s cubic-bezier(.4,0,.2,1)}
+.pcov{position:absolute;inset:0;background:linear-gradient(to top,rgba(8,11,20,.95),rgba(8,11,20,.3) 50%,transparent)}
+.pcovh{position:absolute;inset:0;background:linear-gradient(135deg,rgba(108,99,255,.55),rgba(56,189,248,.38));opacity:0;transition:opacity var(--ease)}
+.pcc{position:absolute;bottom:0;left:0;right:0;padding:.9rem .85rem;transform:translateY(4px);transition:transform var(--ease)}
+.pcnum{font-size:.6rem;font-weight:700;letter-spacing:.1em;color:var(--accent2);text-transform:uppercase;margin-bottom:.18rem;opacity:0;transform:translateY(6px);transition:opacity var(--ease),transform var(--ease)}
+.pctit{font-family:var(--font-d);font-size:clamp(.82rem,2vw,.95rem);font-weight:700;color:#fff;line-height:1.3;margin-bottom:.25rem}
+.pctag{font-size:.65rem;color:var(--text2);opacity:0;transform:translateY(6px);transition:opacity var(--ease) .08s,transform var(--ease) .08s}
+.pcli{position:absolute;top:.8rem;right:.8rem;width:32px;height:32px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:50%;display:flex;align-items:center;justify-content:center;opacity:0;transform:scale(.8) rotate(-45deg);transition:opacity var(--ease),transform var(--ease);backdrop-filter:blur(4px)}
+.pc:hover{transform:translateY(-6px) scale(1.01);box-shadow:0 18px 50px rgba(108,99,255,.28),0 0 0 1px rgba(108,99,255,.28)}
+.pc:hover .pcbg{transform:scale(1.07)}
+.pc:hover .pcovh{opacity:1}
+.pc:hover .pcnum,.pc:hover .pctag{opacity:1;transform:translateY(0)}
+.pc:hover .pcli{opacity:1;transform:scale(1) rotate(0)}
+.pc:hover .pcc{transform:translateY(0)}
+.bp1{background:linear-gradient(135deg,#1a1040,#2d1b69 50%,#0f172a)}
+.bp2{background:linear-gradient(135deg,#0c2340,#164e63 50%,#0f172a)}
+.bp3{background:linear-gradient(135deg,#1a0a0a,#7c2d12 50%,#0f172a)}
+.bp4{background:linear-gradient(135deg,#0a1a0a,#14532d 50%,#0f172a)}
+.bp5{background:linear-gradient(135deg,#1a0f2a,#581c87 50%,#0f172a)}
+.bp6{background:linear-gradient(135deg,#1a1500,#713f12 50%,#0f172a)}
+.pcpat{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:clamp(2.5rem,8vw,4rem);opacity:.14;pointer-events:none}
+
+/* ===== CONTACT ===== */
+.csec{min-height:calc(100svh - var(--hh));display:flex;align-items:center;justify-content:center;padding:clamp(1.5rem,4vw,3rem) clamp(1rem,4vw,2rem)}
+.cwrap{width:100%;max-width:660px}
+.ccard{background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius2);overflow:hidden}
+.ctop{padding:clamp(1.5rem,5vw,3rem) clamp(1.25rem,5vw,3rem) clamp(1rem,3vw,2rem);text-align:center;border-bottom:1px solid var(--border2);position:relative}
+.cglw{position:absolute;top:-60px;left:50%;transform:translateX(-50%);width:300px;height:180px;background:radial-gradient(ellipse,rgba(108,99,255,.2),transparent 70%);pointer-events:none}
+.cav{width:clamp(56px,12vw,80px);height:clamp(56px,12vw,80px);border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;font-family:var(--font-d);font-size:clamp(1.2rem,4vw,1.8rem);font-weight:800;color:#fff;box-shadow:0 8px 32px rgba(108,99,255,.4)}
+.cbot{padding:clamp(1.1rem,4vw,2.5rem) clamp(1.1rem,5vw,3rem);display:flex;flex-direction:column;gap:.8rem}
+.ci{display:flex;align-items:center;gap:.9rem;padding:clamp(.8rem,2.5vw,1.25rem) clamp(.9rem,3vw,1.5rem);background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius);cursor:pointer;transition:border-color var(--ease),background var(--ease),transform var(--ease),box-shadow var(--ease)}
+.ci:hover{border-color:var(--border);background:rgba(108,99,255,.06);transform:translateX(5px);box-shadow:0 0 40px rgba(108,99,255,.25)}
+.ciw{width:clamp(38px,8vw,48px);height:clamp(38px,8vw,48px);border-radius:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.cip{background:rgba(56,189,248,.12);color:var(--accent3)}
+.cie{background:rgba(108,99,255,.12);color:var(--accent)}
+.cil{font-size:.65rem;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.12rem}
+.civ{font-size:clamp(.78rem,2.5vw,1rem);font-weight:500;color:var(--text);font-family:var(--font-d);word-break:break-all}
+.cia{margin-left:auto;color:var(--text3);flex-shrink:0;transition:color var(--ease),transform var(--ease)}
+.ci:hover .cia{color:var(--accent2);transform:translateX(4px)}
+
+/* ===== FOOTER ===== */
+footer{position:relative;z-index:1;border-top:1px solid var(--border2);padding:clamp(1.1rem,3vw,2rem) clamp(1rem,4vw,2rem)}
+.fin{max-width:1200px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:1rem;text-align:center}
+.fcopy{font-size:.82rem;color:var(--text3)}
+.fcopy span{color:var(--accent2)}
+.fsoc{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;justify-content:center}
+.sb{display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:10px;background:var(--surface);border:1px solid var(--border2);color:var(--text2);flex-shrink:0;position:relative;overflow:hidden;transition:border-color var(--ease),transform var(--ease),box-shadow var(--ease)}
+.sb::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--accent),var(--accent2));opacity:0;transition:opacity var(--ease)}
+.sb svg{position:relative;z-index:1;transition:color var(--ease)}
+.sb:hover{border-color:transparent;transform:translateY(-3px);box-shadow:0 8px 20px rgba(108,99,255,.32)}
+.sb:hover::before{opacity:1}
+.sb:hover svg{color:#fff}
+.sbph{width:auto;padding:0 .85rem;font-size:.76rem;font-weight:600;gap:.4rem;white-space:nowrap}
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeL{from{opacity:0;transform:translateX(-28px)}to{opacity:1;transform:none}}
+@keyframes fadeR{from{opacity:0;transform:translateX(28px)}to{opacity:1;transform:none}}
+@keyframes fadeU{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+.fiu{animation:fadeU .65s ease both}
+
+/* ===== CURSOR GLOW ===== */
+#cglow{position:fixed;width:300px;height:300px;border-radius:50%;pointer-events:none;z-index:0;background:radial-gradient(circle,rgba(108,99,255,.055),transparent 70%);transform:translate(-50%,-50%);transition:left .12s ease,top .12s ease;will-change:left,top}
+
+/* ===== BREAKPOINTS ===== */
+@media(min-width:480px){.pgrid{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:600px){.h-greeting{display:block}}
+@media(min-width:768px){
+  :root{--hh:72px}
+  nav{display:flex}
+  .hbg{display:none}
+  /* Force mobile nav COMPLETELY off on desktop */
+  .mnav,.mnav.open{visibility:hidden!important;opacity:0!important;pointer-events:none!important;transform:translateY(-14px)!important}
+  .moverlay,.moverlay.open{visibility:hidden!important;opacity:0!important}
+  .h-brand{display:none}
+  .hgrid{grid-template-columns:1fr 1fr;gap:clamp(2.5rem,5vw,4rem)}
+  .img-side{order:0}
+  .info-side{text-align:left}
+  .int-tags{justify-content:flex-start}
+  .btn{width:auto}
+  .pcard{max-width:300px}
+  .pph{min-height:320px}
+  .pbadge{bottom:-14px;right:-14px}
+  .pgrid{grid-template-columns:repeat(3,1fr)}
+  .fin{flex-direction:row;justify-content:space-between;text-align:left}
+  .fsoc{justify-content:flex-end}
+}
+@media(min-width:1024px){
+  .pgrid{grid-template-columns:repeat(4,1fr)}
+  .pcard{max-width:360px}
+  .pph{min-height:400px}
+}
+@media(max-width:359px){
+  .igrid{grid-template-columns:1fr}
+  .iitem.s2{grid-column:span 1}
+}
+</style>
 </head>
 <body>
 
-<!-- Background Blobs -->
-<div class="bg-blob bg-blob-1"></div>
-<div class="bg-blob bg-blob-2"></div>
-<div class="bg-blob bg-blob-3"></div>
+<div class="blob blob1"></div>
+<div class="blob blob2"></div>
 
 <!-- ===== HEADER ===== -->
-<header id="main-header">
-  <div class="header-inner">
-    <!-- Greeting (desktop) -->
-    <div class="header-greeting">
-      <span>Assalomu aleykum,</span> xush kelibsiz 👋
-    </div>
-    <!-- Brand (mobile only) -->
-    <div class="header-brand">QS</div>
-    <!-- Desktop nav -->
+<header id="hdr">
+  <div class="h-inner">
+    <div class="h-greeting"><span>Assalomu aleykum,</span> xush kelibsiz 👋</div>
+    <div class="h-brand">QS</div>
     <nav>
-      <a href="#" class="nav-link active" data-page="home">Bosh sahifa</a>
-      <a href="#" class="nav-link" data-page="projects">Proektlarimni ko'rish</a>
-      <a href="#" class="nav-link" data-page="contact">Bog'lanish</a>
+      <a href="#" class="nl active" data-page="home">Bosh sahifa</a>
+      <a href="#" class="nl" data-page="projects">Proektlarimni ko'rish</a>
+      <a href="#" class="nl" data-page="contact">Bog'lanish</a>
     </nav>
-    <!-- Hamburger -->
-    <button class="hamburger" id="hamburger" aria-label="Menyuni ochish/yopish" aria-expanded="false">
+    <button class="hbg" id="hbg" aria-label="Menyuni ochish" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
   </div>
 </header>
 
-<!-- Mobile Navigation -->
-<div class="mobile-nav" id="mobile-nav">
-  <a href="#" class="nav-link active" data-page="home">🏠 Bosh sahifa</a>
-  <a href="#" class="nav-link" data-page="projects">💼 Proektlarimni ko'rish</a>
-  <a href="#" class="nav-link" data-page="contact">📬 Bog'lanish</a>
+<!-- ===== MOBILE NAV ===== -->
+<div class="mnav" id="mnav">
+  <div class="mnav-top">Menyu</div>
+  <div class="mnav-line"></div>
+  <a href="#" class="nl active" data-page="home">🏠 Bosh sahifa</a>
+  <a href="#" class="nl" data-page="projects">💼 Proektlarimni ko'rish</a>
+  <a href="#" class="nl" data-page="contact">📬 Bog'lanish</a>
 </div>
+<div class="moverlay" id="mov"></div>
 
 <!-- ===== MAIN ===== -->
 <main>
 
-  <!-- ==============================
-       HOME PAGE
-  ============================== -->
+  <!-- HOME -->
   <div class="page active" id="page-home">
-    <section class="home-hero">
-      <div class="section-wrap">
-        <div class="hero-grid">
-
-          <!-- Left: Profile Image -->
-          <div class="hero-image-side">
-            <div class="profile-card">
-              <div class="profile-card-glow"></div>
-              <div class="profile-img-wrap">
-                <div class="profile-img-placeholder">
-                  <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <section class="home-sec">
+      <div class="wrap">
+        <div class="hgrid">
+          <div class="img-side">
+            <div class="pcard">
+              <div class="pglow"></div>
+              <div class="pimgw">
+                <div class="pph">
+                  <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <circle cx="40" cy="30" r="20" fill="currentColor"/>
                     <ellipse cx="40" cy="72" rx="32" ry="20" fill="currentColor"/>
                   </svg>
-                  <span><img src="image/photo_2026-04-04_16-23-13.jpg" alt=""></span>
+                  <span style="margin-bottom: 20px;"><img src="image/photo_2026-04-04_16-23-13.jpg" alt=""></span>
                 </div>
               </div>
-              <div class="profile-badge">💻 Junior Dev</div>
+              <div class="pbadge">💻 Junior Dev</div>
             </div>
           </div>
-
-          <!-- Right: Info -->
-          <div class="hero-info-side">
-            <div class="hero-tag">
-              <span class="hero-tag-dot"></span>
-              IT Park talabasi
+          <div class="info-side">
+            <div class="tag"><span class="tagdot"></span>IT Park talabasi</div>
+            <h1 class="hname">Qalandar<br>Sattarberdiev</h1>
+            <p class="hsub"><strong>16 yoshli</strong> dasturchi — kelajakdagi professional developer</p>
+            <div class="igrid">
+              <div class="iitem"><div class="ilabel">Yosh</div><div class="ival">16 yosh 🎂</div></div>
+              <div class="iitem"><div class="ilabel">Ta'lim</div><div class="ival">O'rta ta'lim</div></div>
+              <div class="iitem s2"><div class="ilabel">O'qish joyi</div><div class="ival">🏛️ IT Park</div></div>
             </div>
-            <h1 class="hero-name">Qalandar<br>Sattarberdiev</h1>
-            <p class="hero-subtitle">
-              <strong>16 yoshli</strong> dasturchi — kelajakdagi
-              professional developer
-            </p>
-
-            <!-- Info Grid -->
-            <div class="info-grid">
-              <div class="info-item">
-                <div class="info-label">Yosh</div>
-                <div class="info-value">16 yosh 🎂</div>
-              </div>
-              <div class="info-item">
-                <div class="info-label">Ta'lim</div>
-                <div class="info-value">O'rta ta'lim</div>
-              </div>
-              <div class="info-item span-2">
-                <div class="info-label">O'qish joyi</div>
-                <div class="info-value">🏛️ IT Park</div>
+            <div class="int-sec">
+              <div class="int-title">Qiziqishlarim</div>
+              <div class="int-tags">
+                <span class="itag">⌨️ Dasturlash</span>
+                <span class="itag">⚽ Futbol o'ynash</span>
+                <span class="itag">📺 Futbol ko'rish</span>
+                <span class="itag">📚 Kitob o'qish</span>
               </div>
             </div>
-
-            <!-- Interests -->
-            <div class="interests-section">
-              <div class="interests-title">Qiziqishlarim</div>
-              <div class="interests-tags">
-                <span class="interest-tag">⌨️ Dasturlash</span>
-                <span class="interest-tag">⚽ Futbol o'ynash</span>
-                <span class="interest-tag">📺 Futbol ko'rish</span>
-                <span class="interest-tag">📚 Kitob o'qish</span>
-              </div>
-            </div>
-
-            <!-- CTA -->
-            <button class="btn-primary" data-page="contact">
+            <button class="btn" data-page="contact">
               <span>Men bilan bog'lanish</span>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
-              </svg>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </button>
           </div>
-
         </div>
       </div>
     </section>
   </div>
 
-  <!-- ==============================
-       PROJECTS PAGE
-  ============================== -->
+  <!-- PROJECTS -->
   <div class="page" id="page-projects">
     <section>
-      <div class="section-wrap">
-        <div class="projects-header fade-in-up">
-          <div class="section-eyebrow">Portfolio</div>
-          <h2 class="section-title">Mening Proektlarim</h2>
-          <p class="section-desc">
-            Dasturlash yo'lida yaratilgan ishlarim — har biri yangi ko'nikma va tajriba
-          </p>
+      <div class="wrap">
+        <div class="phead fiu">
+          <div class="eyebrow">Portfolio</div>
+          <h2 class="stitle">Mening Proektlarim</h2>
+          <p class="sdesc">Dasturlash yo'lida yaratilgan ishlarim — har biri yangi ko'nikma va tajriba</p>
         </div>
-
-        <div class="projects-grid">
-
-          <!-- Card 1 -->
-          <div class="project-card" data-link="#" onclick="openProject(this)">
-            <div class="project-card-bg bg-p1">
-              <div class="project-card-inner-pattern">🌐</div>
-            </div>
-            <div class="project-card-overlay"></div>
-            <div class="project-card-overlay-hover"></div>
-            <div class="project-card-link-icon">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
-            </div>
-            <div class="project-card-content">
-              <div class="project-card-num">01</div>
-              <div class="project-card-title">Web Sayt</div>
-              <div class="project-card-tag">HTML · CSS</div>
-            </div>
+        <div class="pgrid">
+          <div class="pc" data-link="#" onclick="openProject(this)">
+            <div class="pcbg bp1"><div class="pcpat">🌐</div></div>
+            <div class="pcov"></div><div class="pcovh"></div>
+            <div class="pcli"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></div>
+            <div class="pcc"><div class="pcnum">01</div><div class="pctit">Web Sayt</div><div class="pctag">HTML · CSS</div></div>
           </div>
-
-          <!-- Card 2 -->
-          <div class="project-card" data-link="#" onclick="openProject(this)">
-            <div class="project-card-bg bg-p2">
-              <div class="project-card-inner-pattern">🧮</div>
-            </div>
-            <div class="project-card-overlay"></div>
-            <div class="project-card-overlay-hover"></div>
-            <div class="project-card-link-icon">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
-            </div>
-            <div class="project-card-content">
-              <div class="project-card-num">02</div>
-              <div class="project-card-title">Kalkulyator</div>
-              <div class="project-card-tag">JavaScript</div>
-            </div>
+          <div class="pc" data-link="#" onclick="openProject(this)">
+            <div class="pcbg bp2"><div class="pcpat">🧮</div></div>
+            <div class="pcov"></div><div class="pcovh"></div>
+            <div class="pcli"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></div>
+            <div class="pcc"><div class="pcnum">02</div><div class="pctit">Kalkulyator</div><div class="pctag">JavaScript</div></div>
           </div>
-
-          <!-- Card 3 -->
-          <div class="project-card" data-link="#" onclick="openProject(this)">
-            <div class="project-card-bg bg-p3">
-              <div class="project-card-inner-pattern">📝</div>
-            </div>
-            <div class="project-card-overlay"></div>
-            <div class="project-card-overlay-hover"></div>
-            <div class="project-card-link-icon">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
-            </div>
-            <div class="project-card-content">
-              <div class="project-card-num">03</div>
-              <div class="project-card-title">Todo App</div>
-              <div class="project-card-tag">JavaScript</div>
-            </div>
+          <div class="pc" data-link="#" onclick="openProject(this)">
+            <div class="pcbg bp3"><div class="pcpat">📝</div></div>
+            <div class="pcov"></div><div class="pcovh"></div>
+            <div class="pcli"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></div>
+            <div class="pcc"><div class="pcnum">03</div><div class="pctit">Todo App</div><div class="pctag">JavaScript</div></div>
           </div>
-
-          <!-- Card 4 -->
-          <div class="project-card" data-link="#" onclick="openProject(this)">
-            <div class="project-card-bg bg-p4">
-              <div class="project-card-inner-pattern">🎨</div>
-            </div>
-            <div class="project-card-overlay"></div>
-            <div class="project-card-overlay-hover"></div>
-            <div class="project-card-link-icon">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
-            </div>
-            <div class="project-card-content">
-              <div class="project-card-num">04</div>
-              <div class="project-card-title">Landing Page</div>
-              <div class="project-card-tag">HTML · CSS</div>
-            </div>
+          <div class="pc" data-link="#" onclick="openProject(this)">
+            <div class="pcbg bp4"><div class="pcpat">🎨</div></div>
+            <div class="pcov"></div><div class="pcovh"></div>
+            <div class="pcli"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></div>
+            <div class="pcc"><div class="pcnum">04</div><div class="pctit">Landing Page</div><div class="pctag">HTML · CSS</div></div>
           </div>
-
-          <!-- Card 5 -->
-          <div class="project-card" data-link="#" onclick="openProject(this)">
-            <div class="project-card-bg bg-p5">
-              <div class="project-card-inner-pattern">⚡</div>
-            </div>
-            <div class="project-card-overlay"></div>
-            <div class="project-card-overlay-hover"></div>
-            <div class="project-card-link-icon">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
-            </div>
-            <div class="project-card-content">
-              <div class="project-card-num">05</div>
-              <div class="project-card-title">Quiz App</div>
-              <div class="project-card-tag">JS · DOM</div>
-            </div>
+          <div class="pc" data-link="#" onclick="openProject(this)">
+            <div class="pcbg bp5"><div class="pcpat">⚡</div></div>
+            <div class="pcov"></div><div class="pcovh"></div>
+            <div class="pcli"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></div>
+            <div class="pcc"><div class="pcnum">05</div><div class="pctit">Quiz App</div><div class="pctag">JS · DOM</div></div>
           </div>
-
-          <!-- Card 6 -->
-          <div class="project-card" data-link="#" onclick="openProject(this)">
-            <div class="project-card-bg bg-p6">
-              <div class="project-card-inner-pattern">🌤️</div>
-            </div>
-            <div class="project-card-overlay"></div>
-            <div class="project-card-overlay-hover"></div>
-            <div class="project-card-link-icon">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
-            </div>
-            <div class="project-card-content">
-              <div class="project-card-num">06</div>
-              <div class="project-card-title">Weather App</div>
-              <div class="project-card-tag">API · JS</div>
-            </div>
+          <div class="pc" data-link="#" onclick="openProject(this)">
+            <div class="pcbg bp6"><div class="pcpat">🌤️</div></div>
+            <div class="pcov"></div><div class="pcovh"></div>
+            <div class="pcli"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></div>
+            <div class="pcc"><div class="pcnum">06</div><div class="pctit">Weather App</div><div class="pctag">API · JS</div></div>
           </div>
-
         </div>
       </div>
     </section>
   </div>
 
-  <!-- ==============================
-       CONTACT PAGE
-  ============================== -->
+  <!-- CONTACT -->
   <div class="page" id="page-contact">
-    <section class="contact-hero">
-      <div class="section-wrap">
-        <div class="contact-wrap">
-          <div class="contact-card fade-in-up">
-
-            <div class="contact-card-top">
-              <div class="contact-card-top-glow"></div>
-              <div class="contact-avatar">QS</div>
-              <div class="section-eyebrow" style="margin-bottom: 0.5rem;">Aloqa</div>
-              <h2 class="section-title" style="font-size: 2rem; margin-bottom: 0.5rem;">Bog'lanish</h2>
-              <p style="color: var(--text2); font-size: 0.95rem;">
-                Loyiha yoki hamkorlik uchun murojaat qiling
-              </p>
-            </div>
-
-            <div class="contact-card-bottom">
-
-              <!-- Phone -->
-              <a href="tel:+998886512939" class="contact-item">
-                <div class="contact-icon-wrap contact-icon-phone">
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.38 2 2 0 0 1 3.58 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
-                  </svg>
-                </div>
-                <div>
-                  <div class="contact-item-label">Telefon raqam</div>
-                  <div class="contact-item-value">+998 88 651 29 39</div>
-                </div>
-                <div class="contact-item-arrow">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-                </div>
-              </a>
-
-              <!-- Email -->
-              <a href="mailto:qalandarsattarov9@gmail.com" class="contact-item">
-                <div class="contact-icon-wrap contact-icon-email">
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                    <polyline points="22,6 12,13 2,6"/>
-                  </svg>
-                </div>
-                <div>
-                  <div class="contact-item-label">Email manzil</div>
-                  <div class="contact-item-value">qalandarsattarov9@gmail.com</div>
-                </div>
-                <div class="contact-item-arrow">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-                </div>
-              </a>
-
-            </div>
+    <section class="csec">
+      <div class="cwrap">
+        <div class="ccard fiu">
+          <div class="ctop">
+            <div class="cglw"></div>
+            <div class="cav">QS</div>
+            <div class="eyebrow">Aloqa</div>
+            <h2 class="stitle" style="font-size:2rem;margin-bottom:.5rem">Bog'lanish</h2>
+            <p style="color:var(--text2);font-size:.95rem">Loyiha yoki hamkorlik uchun murojaat qiling</p>
+          </div>
+          <div class="cbot">
+            <a href="tel:+998886512939" class="ci">
+              <div class="ciw cip">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.38 2 2 0 0 1 3.58 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              </div>
+              <div><div class="cil">Telefon raqam</div><div class="civ">+998 88 651 29 39</div></div>
+              <div class="cia"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+            </a>
+            <a href="mailto:qalandarsattarov9@gmail.com" class="ci">
+              <div class="ciw cie">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              </div>
+              <div><div class="cil">Email manzil</div><div class="civ">qalandarsattarov9@gmail.com</div></div>
+              <div class="cia"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+            </a>
           </div>
         </div>
       </div>
@@ -313,39 +453,224 @@
 
 </main>
 
-<!-- ===== FOOTER ===== -->
+<!-- FOOTER -->
 <footer>
-  <div class="footer-inner">
-    <div class="footer-copy">
-      © 2024 <span>Qalandar Sattarberdiev</span> — Portfolio
-    </div>
-    <div class="footer-socials">
-      <!-- Instagram -->
-      <a href="https://instagram.com/sattarovv_lvl" target="_blank" class="social-btn" title="Instagram">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
-          <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
-          <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
-        </svg>
+  <div class="fin">
+    <div class="fcopy">© 2024 <span>Qalandar Sattarberdiev</span> — Portfolio</div>
+    <div class="fsoc">
+      <a href="https://instagram.com/sattarovv_lvl" target="_blank" class="sb" title="Instagram">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
       </a>
-      <!-- Telegram -->
-      <a href="https://t.me/sattarov_lv" target="_blank" class="social-btn" title="Telegram">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="22" y1="2" x2="11" y2="13"/>
-          <polygon points="22 2 15 22 11 13 2 9 22 2"/>
-        </svg>
+      <a href="https://t.me/sattarov_lv" target="_blank" class="sb" title="Telegram">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
       </a>
-      <!-- Phone -->
-      <a href="tel:+998886512939" class="social-btn social-phone-btn" title="Call">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.38 2 2 0 0 1 3.58 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
-        </svg>
+      <a href="tel:+998886512939" class="sb sbph" title="Call">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.38 2 2 0 0 1 3.58 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
         <span>+998 88 651 29 39</span>
       </a>
     </div>
   </div>
 </footer>
 
-<script src="script.js"></script>
+<!-- =============================================
+     JAVASCRIPT — inline, no external file needed
+============================================== -->
+<script>
+(function() {
+
+  /* ── Elements ── */
+  var hdr   = document.getElementById('hdr');
+  var hbg   = document.getElementById('hbg');
+  var mnav  = document.getElementById('mnav');
+  var mov   = document.getElementById('mov');
+
+  /* ══════════════════════════════
+     BURGER MENU
+  ══════════════════════════════ */
+  function menuOpen() {
+    hbg.classList.add('open');
+    mnav.classList.add('open');
+    mov.classList.add('open');
+    hbg.setAttribute('aria-expanded', 'true');
+    hbg.setAttribute('aria-label', 'Menyuni yopish');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function menuClose() {
+    hbg.classList.remove('open');
+    mnav.classList.remove('open');
+    mov.classList.remove('open');
+    hbg.setAttribute('aria-expanded', 'false');
+    hbg.setAttribute('aria-label', 'Menyuni ochish');
+    document.body.style.overflow = '';
+  }
+
+  /* Hamburger button click */
+  hbg.addEventListener('click', function(e) {
+    e.stopPropagation();
+    if (mnav.classList.contains('open')) {
+      menuClose();
+    } else {
+      menuOpen();
+    }
+  });
+
+  /* Overlay click → close */
+  mov.addEventListener('click', menuClose);
+
+  /* Click anywhere outside → close */
+  document.addEventListener('click', function(e) {
+    if (mnav.classList.contains('open') &&
+        !mnav.contains(e.target) &&
+        !hbg.contains(e.target)) {
+      menuClose();
+    }
+  });
+
+  /* ESC key → close */
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') menuClose();
+  });
+
+  /* Resize to desktop → close + reset body scroll */
+  window.addEventListener('resize', function() {
+    if (window.innerWidth >= 768) menuClose();
+  });
+
+  /* ══════════════════════════════
+     STICKY HEADER
+  ══════════════════════════════ */
+  window.addEventListener('scroll', function() {
+    hdr.classList.toggle('scrolled', window.scrollY > 16);
+  }, { passive: true });
+
+  /* ══════════════════════════════
+     PAGE ROUTER
+  ══════════════════════════════ */
+  var PAGES = ['home', 'projects', 'contact'];
+
+  function goTo(id) {
+    if (PAGES.indexOf(id) === -1) id = 'home';
+
+    /* Hide all pages */
+    var pages = document.querySelectorAll('.page');
+    for (var i = 0; i < pages.length; i++) pages[i].classList.remove('active');
+
+    /* Show target */
+    var target = document.getElementById('page-' + id);
+    if (target) {
+      target.classList.add('active');
+      /* Re-run fade-in-up animations */
+      var fius = target.querySelectorAll('.fiu');
+      for (var j = 0; j < fius.length; j++) {
+        fius[j].style.animation = 'none';
+        fius[j].offsetHeight; /* reflow */
+        fius[j].style.animation = '';
+      }
+      if (id === 'projects') setTimeout(staggerCards, 60);
+    }
+
+    /* Sync all nav links */
+    var links = document.querySelectorAll('[data-page]');
+    for (var k = 0; k < links.length; k++) {
+      if (links[k].dataset.page === id) {
+        links[k].classList.add('active');
+      } else {
+        links[k].classList.remove('active');
+      }
+    }
+
+    menuClose();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    try { history.pushState(null, '', '#' + id); } catch(e) {}
+  }
+
+  /* Attach click to every [data-page] element */
+  var allLinks = document.querySelectorAll('[data-page]');
+  for (var l = 0; l < allLinks.length; l++) {
+    allLinks[l].addEventListener('click', function(e) {
+      e.preventDefault();
+      goTo(this.dataset.page);
+    });
+  }
+
+  /* Hash routing */
+  window.addEventListener('popstate', function() {
+    var h = location.hash.replace('#', '');
+    goTo(PAGES.indexOf(h) !== -1 ? h : 'home');
+  });
+
+  /* Initial load */
+  var initHash = location.hash.replace('#', '');
+  if (PAGES.indexOf(initHash) !== -1) goTo(initHash);
+
+  /* ══════════════════════════════
+     PROJECT CARDS STAGGER
+  ══════════════════════════════ */
+  function staggerCards() {
+    var cards = document.querySelectorAll('.pc');
+    for (var i = 0; i < cards.length; i++) {
+      (function(card, idx) {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(18px)';
+        card.style.transition = 'none';
+        setTimeout(function() {
+          card.style.transition = 'opacity .45s ease, transform .45s ease, box-shadow .4s ease';
+          card.style.opacity = '1';
+          card.style.transform = '';
+        }, idx * 65);
+      })(cards[i], i);
+    }
+  }
+
+  /* ══════════════════════════════
+     PROJECT CARD RIPPLE
+  ══════════════════════════════ */
+  window.openProject = function(card) {
+    var link = card.dataset.link;
+    if (link && link !== '#') { window.open(link, '_blank', 'noopener'); return; }
+    var r = document.createElement('div');
+    r.style.cssText = 'position:absolute;inset:0;border-radius:inherit;background:rgba(255,255,255,.1);animation:rpl .6s ease-out forwards;pointer-events:none;z-index:5';
+    card.appendChild(r);
+    setTimeout(function() { if (r.parentNode) r.parentNode.removeChild(r); }, 650);
+  };
+  /* Inject ripple keyframe */
+  var rs = document.createElement('style');
+  rs.textContent = '@keyframes rpl{from{opacity:1;transform:scale(.88)}to{opacity:0;transform:scale(1.06)}}';
+  document.head.appendChild(rs);
+
+  /* ══════════════════════════════
+     CURSOR GLOW (desktop only)
+  ══════════════════════════════ */
+  if (!window.matchMedia('(pointer:coarse)').matches) {
+    var cg = document.createElement('div');
+    cg.id = 'cglow';
+    document.body.appendChild(cg);
+    document.addEventListener('mousemove', function(e) {
+      cg.style.left = e.clientX + 'px';
+      cg.style.top  = e.clientY + 'px';
+    }, { passive: true });
+  }
+
+  /* ══════════════════════════════
+     HOME ENTRANCE ANIMATION
+  ══════════════════════════════ */
+  var homeEls = document.querySelectorAll('.tag,.hname,.hsub,.iitem,.int-sec,.btn');
+  for (var m = 0; m < homeEls.length; m++) {
+    (function(el, idx) {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(12px)';
+      el.style.transition = 'none';
+      setTimeout(function() {
+        el.style.transition = 'opacity .5s ease, transform .5s ease';
+        el.style.opacity = '1';
+        el.style.transform = '';
+      }, 200 + idx * 85);
+    })(homeEls[m], m);
+  }
+
+})();
+</script>
 </body>
 </html>
